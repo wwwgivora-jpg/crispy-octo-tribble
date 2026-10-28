@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Givora</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#feee00">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Givora">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<style>
+:root{--m:#3866df;--y:#feee00;--bg:#f3f3f6;--tx:#1a1a1a;--g:#6b6b76;--c:#fff;--sf:#f3f3f6;--bd:#e2e2e8}
+@media (prefers-color-scheme:dark){:root{--m:#7b9bff;--bg:#121214;--tx:#f2f2f4;--g:#a3a3ad;--c:#1e1e22;--sf:#2a2a30;--bd:#33333a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;max-width:560px;margin:0 auto;padding-bottom:40px}
+header{background:var(--y);color:#111;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;position:sticky;top:0;z-index:5}
+header b{font-weight:800;letter-spacing:-.02em}
+header button{background:none;border:0;color:#111;font-size:15px;font-weight:700;margin-left:8px;cursor:pointer;padding:6px 4px}
+.lang{background:#111!important;color:var(--y)!important;border-radius:12px;padding:4px 10px!important}
+input,textarea,select{width:100%;padding:12px;margin-top:10px;border:1px solid var(--bd);border-radius:10px;background:var(--c);color:var(--tx);font:inherit}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--m);outline-offset:0}
+.sbar{background:var(--y);padding:2px 12px 14px}
+.sbar input{margin-top:0;border:0;border-radius:10px;background:#fff;color:#1a1a1a;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.ban{margin:12px;border-radius:12px;background:#111;color:var(--y);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:800;border:1px solid var(--bd)}
+.ban span{color:#fff;font-weight:500;font-size:13px;text-align:right}
+.cats{display:flex;gap:10px;overflow-x:auto;padding:6px 12px 4px}
+.cat{flex:none;width:74px;background:none;border:0;color:var(--tx);font:inherit;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:4px 0}
+.cat *{pointer-events:none}
+.cat .ci{width:58px;height:58px;border-radius:50%;background:var(--c);border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:27px}
+.cat.on .ci{background:var(--y);border-color:#111}
+.cat.on{font-weight:700}
+.cat span:last-child{line-height:1.2;text-align:center}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 12px 8px}
+.chip{flex:none;padding:8px 14px;border-radius:20px;border:1px solid var(--bd);background:var(--c);color:var(--tx);font-weight:600;cursor:pointer}
+.chip.on{background:var(--y);color:#111;border-color:#111}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 12px}
+.card,.row{background:var(--c);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.card{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.card .cb{padding:10px 10px 12px;display:flex;flex-direction:column;flex:1}
+.em{background:var(--sf);display:flex;align-items:center;justify-content:center;min-height:130px;font-size:56px}
+.em img{border-radius:0!important}
+.row{display:flex;align-items:center;gap:10px;margin-bottom:8px}.row>div{flex:1}
+.pn{font-weight:500;font-size:13px;margin:0 0 4px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pr{color:var(--tx);font-weight:800;font-size:17px}
+.cod{align-self:flex-start;margin-top:6px;font-size:11px;font-weight:700;background:var(--y);color:#111;border-radius:4px;padding:1px 6px}
+.btn{background:var(--m);color:#fff;border:0;border-radius:8px;padding:11px;font-weight:700;cursor:pointer;width:100%;margin-top:auto;font-size:14px}
+.card .btn{margin-top:10px}
+.pad .btn,.pad>.btn{margin-top:8px}
+.btn.s{background:var(--sf);color:var(--tx);border:1px solid var(--bd)}
+.pad{padding:12px 16px}.note{color:var(--g);font-size:13px}h2{margin:12px 0 4px;font-size:18px}
+.q button{width:30px;height:30px;border-radius:15px;border:0;background:var(--sf);color:var(--tx);font-size:18px;cursor:pointer}
+.tag{font-size:12px;padding:2px 8px;border-radius:10px;background:var(--y);color:#111;font-weight:600}
+.box{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:14px}
+.frow{display:flex;gap:8px;padding:0 12px}.frow>*{margin-top:0;min-width:0;flex:1}
+</style>
+</head>
+<body>
+<header><div style="display:flex;align-items:center;gap:8px"><img src="data:image/jpeg;base64,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" style="height:38px;border-radius:8px;background:#fff" alt=""><b style="font-size:20px">Givora</b></div><div><button class="lang" id="lb"></button><button id="ab"></button><button id="cb"></button></div></header>
+<main id="app"></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+// ====== SETUP: Supabase-er Project Settings > API theke ei duto boshao ======
+const SB_URL="https://yiewhwcobngvscavalrv.supabase.co", SB_KEY="sb_publishable_I4dZabE4EjWbsWW75fZGSA_Ff_2-8VH";
+const ZONES=[{k:"riyadh",bn:"রিয়াদ সিটি",en:"Riyadh city",charge:550},{k:"other",bn:"অন্য শহর (সৌদি আরব)",en:"Other city (Saudi Arabia)",charge:1020}];
+const zone=()=>ZONES.find(z=>z.k===S.zone)||ZONES[0];
+const BKASH_NUMBER="01XXXXXXXXX"; // এখানে আপনার bKash নম্বর বসান
+// =========================================================================
+const sb=supabase.createClient(SB_URL,SB_KEY);
+const L={bn:{search:"পণ্য খুঁজুন...",add:"কার্টে যোগ",empty:"কার্ট খালি",total:"মোট",dl:"ডেলিভারি চার্জ",area:"ডেলিভারি এলাকা",name:"পুরো নাম",phone:"সৌদি মোবাইল (05XXXXXXXX)",addr:"পূর্ণ ঠিকানা (শহরের নাম সহ)",order:"অর্ডার জমা দিন (৫০% অগ্রিম)",fill:"সব ঘর সঠিকভাবে পূরণ করুন",done:"অর্ডার জমা হয়েছে! bKash পেমেন্ট যাচাই করে আমরা ফোন করব।",home:"হোম",orders:"অর্ডার",prods:"প্রোডাক্ট",team:"টিম",login:"লগইন",logout:"লগআউট",email:"ইমেইল",pass:"পাসওয়ার্ড (৬+ অক্ষর)",signup:"নতুন অ্যাকাউন্ট",newp:"নতুন প্রোডাক্ট",pbn:"নাম (বাংলা)",pen:"Name (English)",ppr:"দাম (৳)",save:"সেভ",del:"মুছুন",none:"কিছু নেই",refresh:"রিফ্রেশ",addm:"মেম্বার যোগ করুন (আগে সে সাইন-আপ করবে)",st:{new:"নতুন",confirmed:"নিশ্চিত",delivered:"ডেলিভারি হয়েছে",cancelled:"বাতিল"},cats:{all:"🛍️ সব",shirt:"👔 শার্ট",tshirt:"👕 টি-শার্ট",genji:"🎽 গেঞ্জি",anniv:"💑 অ্যানিভার্সারি কম্বো",bday:"🎂 বার্থডে গিফট"},err:"সমস্যা হয়েছে: ",cod:"৫০% অগ্রিম, বাকি ডেলিভারিতে",half:"৫০% অগ্রিম",adv:"এখন অগ্রিম (৫০%)",due:"ডেলিভারিতে বাকি",payhow:"প্রথমে bKash অ্যাপে {n} নম্বরে অগ্রিম টাকা Send Money করুন। তারপর নিচে আপনার bKash নম্বর ও TrxID লিখুন।",bks:"যে bKash নম্বর থেকে টাকা পাঠিয়েছেন",trx:"TrxID (bKash মেসেজে আছে)",badbk:"bKash নম্বর সঠিক নয়",badtx:"TrxID সঠিক নয়। bKash মেসেজ দেখে লিখুন",dupt:"এই TrxID আগেই ব্যবহার হয়েছে",pmin:"সর্বনিম্ন ৳",pmax:"সর্বোচ্চ ৳",sort:{def:"সাজান",new:"নতুন আগে",lo:"দাম: কম → বেশি",hi:"দাম: বেশি → কম"},cnt:"টি পণ্য",clr:"ফিল্টার মুছুন",allst:"সব",osr:"নাম বা ফোন খুঁজুন...",myorders:"আমার অর্ডার",lnote:"কাস্টমার: নতুন অ্যাকাউন্ট খুলে লগইন করলে আপনার অর্ডারের হিস্টোরি দেখতে পাবেন।"},
+en:{search:"Search products...",add:"Add to cart",empty:"Cart is empty",total:"Total",dl:"Delivery charge",area:"Delivery area",name:"Full name",phone:"Saudi mobile (05XXXXXXXX)",addr:"Full address (with city name)",order:"Place order (50% advance)",fill:"Please fill all fields correctly",done:"Order placed! We will verify your bKash payment and call you.",home:"Home",orders:"Orders",prods:"Products",team:"Team",login:"Login",logout:"Logout",email:"Email",pass:"Password (6+ chars)",signup:"Create account",newp:"New product",pbn:"Name (Bangla)",pen:"Name (English)",ppr:"Price (৳)",save:"Save",del:"Delete",none:"Nothing here",refresh:"Refresh",addm:"Add member (they must sign up first)",st:{new:"New",confirmed:"Confirmed",delivered:"Delivered",cancelled:"Cancelled"},cats:{all:"🛍️ All",shirt:"👔 Shirt",tshirt:"👕 T-shirt",genji:"🎽 Genji",anniv:"💑 Anniversary Combo",bday:"🎂 Birthday Gift"},err:"Error: ",cod:"50% advance, rest on delivery",half:"50% advance",adv:"Advance now (50%)",due:"Due on delivery",payhow:"First send the advance to {n} using Send Money in the bKash app. Then enter your bKash number and TrxID below.",bks:"bKash number you paid from",trx:"TrxID (in your bKash message)",badbk:"Invalid bKash number",badtx:"Invalid TrxID. Check your bKash message",dupt:"This TrxID was already used",pmin:"Min ৳",pmax:"Max ৳",sort:{def:"Sort",new:"Newest first",lo:"Price: low → high",hi:"Price: high → low"},cnt:"products",clr:"Clear filters",allst:"All",osr:"Search name or phone...",myorders:"My orders",lnote:"Customers: create an account and log in to see your order history."}};
+let S={zone:"riyadh",f:{n:"",p:"",a:"",b:"",t:""},lang:"bn",tab:"home",cat:"all",q:"",pmin:"",pmax:"",sort:"def",ost:"all",oq:"",cart:{},prods:[],orders:[],staff:[],role:null,atab:"orders",my:[],user:null};
+const $=s=>document.querySelector(s),t=()=>L[S.lang],tk=n=>"৳"+Number(n).toLocaleString("en-US");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pic=(p,z)=>p.image_url?`<img src="${esc(p.image_url)}" alt="" style="width:${z}px;height:${z}px;object-fit:cover;border-radius:10px">`:`<span style="font-size:${Math.round(z*.75)}px">${esc(p.icon)}</span>`;
+const picBig=p=>p.image_url?`<img src="${esc(p.image_url)}" alt="" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px">`:esc(p.icon);
+function shrink(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const r=Math.min(1,700/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*r);c.height=Math.round(im.height*r);c.getContext("2d").drawImage(im,0,0,c.width,c.height);c.toBlob(b=>b?ok(b):no(new Error("image")),"image/jpeg",.82)};im.onerror=()=>no(new Error("image"));im.src=URL.createObjectURL(f)})}
+const nm=p=>p["name_"+S.lang]||p.name_en;
+const can=r=>S.role&&(r==="any"||(r==="pm"&&S.role!=="staff")||(r==="owner"&&S.role==="owner"));
+const payInfo=o=>o.trx_id?`<div class="note">${o.zone?(o.zone==="riyadh"?"রিয়াদ":"অন্য শহর")+" · "+t().dl+": <b>"+tk(o.delivery_charge||0)+"</b><br>":""}${t().adv}: <b>${tk(o.advance)}</b> · ${t().due}: <b>${tk(o.due)}</b><br>bKash ${esc(o.bkash_number)} · TrxID <b>${esc(o.trx_id)}</b></div>`:"";
+const fail=e=>alert(t().err+(e.message||e));
+
+async function loadProds(){const{data}=await sb.from("products").select("*").order("created_at");S.prods=data||[]}
+async function loadOrders(){if(!S.role)return;const{data}=await sb.from("orders").select("*").order("created_at",{ascending:false}).limit(100);S.orders=data||[]}
+async function loadMy(){if(!S.user)return;const{data}=await sb.from("orders").select("*").eq("user_id",S.user.id).order("created_at",{ascending:false});S.my=data||[]}
+async function loadStaff(){if(S.role!=="owner")return;const{data}=await sb.rpc("list_staff");S.staff=data||[]}
+async function loadRole(){const{data:{session}}=await sb.auth.getSession();S.role=null;S.user=session?session.user:null;
+ if(session){const{data}=await sb.from("staff").select("role").eq("user_id",session.user.id).maybeSingle();S.role=data?data.role:null}}
+
+function head(){const x=t();$("#lb").textContent=S.lang==="bn"?"EN":"বাং";
+ $("#cb").textContent="🛒 "+Object.values(S.cart).reduce((a,b)=>a+b,0);$("#ab").textContent=S.role?"⚙️ "+x.orders:S.user?"👤 "+x.myorders:"👤";}
+
+function render(){head();const x=t(),a=$("#app");
+if(S.tab==="home"){
+ let ps=S.prods.filter(p=>p.active&&(S.cat==="all"||p.cat===S.cat)&&(p.name_en+p.name_bn).toLowerCase().includes(S.q.toLowerCase())&&(S.pmin===""||p.price>=+S.pmin)&&(S.pmax===""||p.price<=+S.pmax));
+ if(S.sort==="lo")ps.sort((a,b)=>a.price-b.price);else if(S.sort==="hi")ps.sort((a,b)=>b.price-a.price);else if(S.sort==="new")ps.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+ a.innerHTML=`
+ <div class="sbar"><input id="q" placeholder="${x.search}" value="${esc(S.q)}"></div><div class="ban"><b>${x.cod}</b><span>${x.dl}: ${ZONES.map(z=>(S.lang==="bn"?z.bn:z.en)+" "+tk(z.charge)).join(" · ")}</span></div>
+ <div class="cats">${Object.entries(x.cats).map(([k,v])=>{const i=v.indexOf(" ");return`<button class="cat ${S.cat===k?"on":""}" data-cat="${k}"><span class="ci">${v.slice(0,i)}</span><span>${esc(v.slice(i+1))}</span></button>`}).join("")}</div>
+ <div class="frow"><input id="pmin" inputmode="numeric" placeholder="${x.pmin}" value="${esc(S.pmin)}"><input id="pmax" inputmode="numeric" placeholder="${x.pmax}" value="${esc(S.pmax)}"><select id="sort">${Object.entries(x.sort).map(([k,v])=>`<option value="${k}" ${S.sort===k?"selected":""}>${v}</option>`).join("")}</select></div>
+ <div class="note" style="padding:8px 14px 0">${ps.length} ${x.cnt}${(S.cat!=="all"||S.q||S.pmin||S.pmax||S.sort!=="def")?` <button class="chip" data-clr="1">${x.clr}</button>`:""}</div>
+ <div class="grid">${ps.map(p=>`<div class="card"><div class="em">${picBig(p)}</div><div class="cb"><div class="pn">${esc(nm(p))}</div><div class="pr">${tk(p.price)}</div><span class="cod">${x.half}</span><button class="btn" data-add="${p.id}">+ ${x.add}</button></div></div>`).join("")||`<p class="note pad">${x.none}</p>`}</div>`;
+ $("#q").oninput=e=>{S.q=e.target.value;const p=e.target.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(p,p)};
+ for(const k of["pmin","pmax"])$("#"+k).oninput=e=>{S[k]=e.target.value.replace(/\D/g,"");render();const n=$("#"+k);n.focus();n.setSelectionRange(n.value.length,n.value.length)};
+ $("#sort").onchange=e=>{S.sort=e.target.value;render()};
+}else if(S.tab==="cart"){
+ const its=S.prods.filter(p=>S.cart[p.id]),sub=its.reduce((s,p)=>s+p.price*S.cart[p.id],0),z=zone(),ship=z.charge,tot=sub+ship,adv=Math.ceil(tot/2);
+ a.innerHTML=`<div class="pad"><button class="btn s" data-go="home">← ${x.home}</button>`+(its.length?its.map(p=>`<div class="row">${pic(p,46)}<div><div class="pn">${esc(nm(p))}</div><div class="pr">${tk(p.price*S.cart[p.id])}</div></div><div class="q"><button data-q="${p.id}" data-d="-1">−</button> ${S.cart[p.id]} <button data-q="${p.id}" data-d="1">+</button></div></div>`).join("")+
+ `<label class="note">${x.area}</label><select id="fz" style="margin-top:4px">${ZONES.map(q=>`<option value="${q.k}" ${S.zone===q.k?"selected":""}>${S.lang==="bn"?q.bn:q.en} — ${tk(q.charge)}</option>`).join("")}</select><p class="note">${x.dl}: ${tk(ship)}</p><h2>${x.total}: ${tk(tot)}</h2><div class="box"><div>${x.adv}: <b>${tk(adv)}</b></div><div>${x.due}: <b>${tk(tot-adv)}</b></div><p class="note" style="margin:8px 0 0">${x.payhow.replace("{n}","<b>"+BKASH_NUMBER+"</b>")}</p></div><input id="fn" placeholder="${x.name}" value="${esc(S.f.n)}"><input id="fp" placeholder="${x.phone}" inputmode="tel" maxlength="14" value="${esc(S.f.p)}"><textarea id="fa" rows="3" placeholder="${x.addr}">${esc(S.f.a)}</textarea><input id="fb" placeholder="${x.bks}" inputmode="tel" maxlength="11" value="${esc(S.f.b)}"><input id="ft" placeholder="${x.trx}" maxlength="12" autocapitalize="characters" value="${esc(S.f.t)}"><button class="btn" id="po">${x.order}</button>`:`<p class="note">${x.empty}</p>`)+`</div>`;
+}else if(S.tab==="login"){
+ a.innerHTML=`<div class="pad"><button class="btn s" data-go="home">← ${x.home}</button><h2>${x.login}</h2><p class="note">${x.lnote}</p><input id="le" type="email" placeholder="${x.email}"><input id="lp" type="password" placeholder="${x.pass}"><button class="btn" id="li">${x.login}</button><button class="btn s" id="su">${x.signup}</button></div>`;
+}else if(S.tab==="my"){
+ a.innerHTML=`<div class="pad"><button class="btn s" data-go="home">← ${x.home}</button><h2>${x.myorders}</h2>`+(S.my.map(o=>`<div class="row" style="display:block;margin-top:8px"><span class="tag">${x.st[o.status]||o.status}</span> <span class="note">${new Date(o.created_at).toLocaleDateString()}</span><div class="note">${(o.items||[]).map(i=>esc(i.name)+" ×"+Number(i.qty)).join(", ")}</div><div class="pr">${tk(o.total)}</div>${payInfo(o)}</div>`).join("")||`<p class="note">${x.none}</p>`)+`<button class="btn s" id="lo">${x.logout}</button></div>`;
+}else{
+ const tabs=["orders",...(can("pm")?["prods"]:[]),...(can("owner")?["team"]:[])];
+ const fo=S.orders.filter(o=>(S.ost==="all"||o.status===S.ost)&&((o.name||"")+" "+(o.phone||"")).toLowerCase().includes(S.oq.toLowerCase()));
+ a.innerHTML=`<div class="pad"><button class="btn s" data-go="home">← ${x.home}</button></div><div class="chips">${tabs.map(k=>`<button class="chip ${S.atab===k?"on":""}" data-at="${k}">${x[k]}</button>`).join("")}<button class="chip" id="lo">${x.logout}</button></div>`+
+ (S.atab==="orders"?`<div class="pad"><button class="btn s" id="rf">${x.refresh}</button><input id="oq" placeholder="${x.osr}" value="${esc(S.oq)}"></div><div class="chips">${[["all",x.allst],...Object.entries(x.st)].map(([k,v])=>`<button class="chip ${S.ost===k?"on":""}" data-ost="${k}">${v} (${k==="all"?S.orders.length:S.orders.filter(o=>o.status===k).length})</button>`).join("")}</div><div class="pad" style="padding-top:0">`+(fo.map(o=>`<div class="row" style="display:block;margin-top:8px"><b>${esc(o.name)}</b> · ${esc(o.phone)} <span class="tag">${x.st[o.status]||o.status}</span><div class="note">${esc(o.address)}</div><div class="note">${(o.items||[]).map(i=>esc(i.icon)+" "+esc(i.name)+" ×"+Number(i.qty)).join(", ")}</div><div class="pr">${tk(o.total)}</div>${payInfo(o)}<select data-os="${o.id}">${Object.entries(x.st).map(([k,v])=>`<option value="${k}" ${o.status===k?"selected":""}>${v}</option>`).join("")}</select></div>`).join("")||`<p class="note">${x.none}</p>`)+`</div>`
+ :S.atab==="prods"?`<div class="pad"><h2>${x.newp}</h2><input id="n1" placeholder="${x.pbn}"><input id="n2" placeholder="${x.pen}"><input id="n3" placeholder="${x.ppr}" inputmode="numeric"><input id="n4" value="🎁"><div class="note" style="margin-top:10px">📷 ছবি / Photo</div><input id="n6" type="file" accept="image/*"><select id="n5">${Object.entries(x.cats).filter(([k])=>k!=="all").map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select><button class="btn" id="sp">${x.save}</button><div style="margin-top:12px">${S.prods.map(p=>`<div class="row">${pic(p,42)}<div><div class="pn">${esc(p.name_bn)}</div><div class="pr">${tk(p.price)}</div></div><button class="chip" data-dp="${p.id}">${x.del}</button></div>`).join("")}</div></div>`
+ :`<div class="pad"><h2>${x.addm}</h2><input id="m1" type="email" placeholder="${x.email}"><select id="m2"><option value="staff">Staff (orders)</option><option value="manager">Manager (orders + products)</option><option value="owner">Owner</option></select><button class="btn" id="am">${x.save}</button><div style="margin-top:12px">${S.staff.map(m=>`<div class="row"><div><b>${esc(m.email)}</b> <span class="tag">${esc(m.role)}</span></div><button class="chip" data-rm="${esc(m.email)}">${x.del}</button></div>`).join("")}</div></div>`);
+ const oqi=$("#oq");if(oqi)oqi.oninput=e=>{S.oq=e.target.value;const p=e.target.selectionStart;render();const n=$("#oq");n.focus();n.setSelectionRange(p,p)};
+}}
+
+document.addEventListener("click",async e=>{const d=e.target.dataset,x=t(),id=e.target.id;
+try{
+if(d.cat){S.cat=d.cat;render()}
+else if(d.clr){S.cat="all";S.q="";S.pmin="";S.pmax="";S.sort="def";render()}
+else if(d.ost){S.ost=d.ost;render()}
+else if(d.add){S.cart[d.add]=(S.cart[d.add]||0)+1;head()}
+else if(d.go){S.tab=d.go;render()}
+else if(d.q){const v=(S.cart[d.q]||0)+Number(d.d);if(v<=0)delete S.cart[d.q];else S.cart[d.q]=v;render()}
+else if(d.at){S.atab=d.at;if(d.at==="orders")await loadOrders();if(d.at==="team")await loadStaff();render()}
+else if(id==="rf"){await loadOrders();render()}
+else if(id==="lo"){await sb.auth.signOut();S.role=null;S.user=null;S.my=[];S.tab="home";render()}
+else if(id==="li"||id==="su"){const em=$("#le").value.trim(),pw=$("#lp").value;
+ const r=id==="li"?await sb.auth.signInWithPassword({email:em,password:pw}):await sb.auth.signUp({email:em,password:pw});
+ if(r.error)return fail(r.error);await loadRole();if(S.role){await loadOrders();await loadProds();S.tab="admin"}else{await loadMy();S.tab="my"}render()}
+else if(id==="po"){const n=$("#fn").value.trim(),p=$("#fp").value.trim().replace(/[\s-]/g,""),ad=$("#fa").value.trim(),z=zone(),bk=$("#fb").value.trim(),tx=$("#ft").value.trim().toUpperCase();
+ if(!n||!/^(?:\+?966|0)?5\d{8}$/.test(p)||!ad)return alert(x.fill);
+ if(!/^01\d{9}$/.test(bk))return alert(x.badbk);
+ if(!/^[A-Z0-9]{8,12}$/.test(tx))return alert(x.badtx);
+ const its=S.prods.filter(q=>S.cart[q.id]);
+ const tot=its.reduce((s,q)=>s+q.price*S.cart[q.id],0)+z.charge,adv=Math.ceil(tot/2);
+ const{error}=await sb.from("orders").insert({name:n,phone:"+966"+p.replace(/^\+?966/,"").replace(/^0/,""),address:ad,total:tot,zone:z.k,delivery_charge:z.charge,advance:adv,due:tot-adv,bkash_number:bk,trx_id:tx,items:its.map(q=>({name:nm(q),icon:q.icon,qty:S.cart[q.id]}))});
+ if(error)return error.code==="23505"?alert(x.dupt):fail(error);S.cart={};S.f={n:"",p:"",a:"",b:"",t:""};S.tab="home";render();alert(x.done)}
+else if(id==="sp"){const bn=$("#n1").value.trim(),en=$("#n2").value.trim(),pr=parseInt($("#n3").value);if(!(bn||en)||!pr)return;
+ const btn=e.target,f=$("#n6").files[0];btn.disabled=true;btn.textContent="...";
+ try{let url=null;if(f){const blob=await shrink(f),path="p"+Date.now()+".jpg";
+ const up=await sb.storage.from("products").upload(path,blob,{contentType:"image/jpeg"});if(up.error)throw up.error;
+ url=sb.storage.from("products").getPublicUrl(path).data.publicUrl}
+ const{error}=await sb.from("products").insert({name_bn:bn||en,name_en:en||bn,price:pr,icon:$("#n4").value||"🎁",cat:$("#n5").value,image_url:url});if(error)throw error;
+ await loadProds();render()}catch(er){fail(er);btn.disabled=false;btn.textContent=t().save}}
+else if(d.dp){const{error}=await sb.from("products").delete().eq("id",d.dp);if(error)return fail(error);await loadProds();render()}
+else if(id==="am"){const{error}=await sb.rpc("add_staff",{p_email:$("#m1").value.trim(),p_role:$("#m2").value});if(error)return fail(error);await loadStaff();render()}
+else if(d.rm){const{error}=await sb.rpc("remove_staff",{p_email:d.rm});if(error)return fail(error);await loadStaff();render()}
+}catch(err){fail(err)}});
+document.addEventListener("input",e=>{const m={fn:"n",fp:"p",fa:"a",fb:"b",ft:"t"}[e.target.id];if(m)S.f[m]=e.target.value});
+document.addEventListener("change",async e=>{if(e.target.id==="fz"){S.zone=e.target.value;render();return}if(e.target.dataset.os){const{error}=await sb.from("orders").update({status:e.target.value}).eq("id",e.target.dataset.os);if(error)fail(error)}});
+$("#lb").onclick=()=>{S.lang=S.lang==="bn"?"en":"bn";render()};
+$("#cb").onclick=()=>{S.tab="cart";render()};
+$("#ab").onclick=async()=>{if(S.role){await loadOrders();S.tab="admin"}else if(S.user){await loadMy();S.tab="my"}else S.tab="login";render()};
+(async()=>{render();await loadProds();await loadRole();if(S.role)await loadOrders();else if(S.user)await loadMy();render();setInterval(async()=>{if(S.tab==="admin"&&S.atab==="orders"&&document.activeElement.id!=="oq"){await loadOrders();render()}},30000)})();
+</script>
+</body>
+</html>
